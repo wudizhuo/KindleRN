@@ -2,17 +2,20 @@
 
 var React = require('react-native');
 var {
-    AppRegistry,
     StyleSheet,
     Text,
     View,
     TextInput,
     ToastAndroid,
+    TouchableHighlight,
+    TouchableOpacity,
     } = React;
+
+var Dimensions = require('Dimensions');
 
 var MainView = React.createClass({
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             inputText: '',
         };
@@ -35,13 +38,9 @@ var MainView = React.createClass({
     },
 
 
-
     render: function () {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Kindle助手
-                </Text>
                 <View>
                     <TextInput
                         style={{height: 220, borderColor: 'gray', borderWidth: 1}}
@@ -50,25 +49,47 @@ var MainView = React.createClass({
                         />
                 </View>
                 <View style={{
-                    flexDirection:'row'
+                    display:'flex',
+                    flex: 1,
+                    width:Dimensions.get('window').width,
+                    flexDirection:'row',
+                    alignSelf: 'stretch',
+                    alignItem: 'stretch',
+                    justifyContent:'space-around',
                     }
                 }>
-                    <Text style={styles.instructions}
-                          onPress={this._clean}
-                        >
-                        清除内容
-                    </Text>
-                    <Text style={styles.instructions}
-                          onPress={this._preview}
-                        >
-                        预览内容
-                    </Text>
+                    <TouchableHighlight
+                        style={styles.touchable}
+                        underlayColor="#1976D2"
+                        onPress={this._clean}>
+                        <View>
+                            <Text style={styles.button}>
+                                清除内容
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight
+                        style={styles.touchable}
+                        underlayColor="#1976D2"
+                        onPress={this._preview}>
+                        <View>
+                            <Text style={styles.button}>
+                                预览内容
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>
-                <Text style={styles.instructions}
-                      onPress={this._send}
-                    >
-                    发送到我的kindle
-                </Text>
+
+                <TouchableHighlight
+                    style={styles.touchable}
+                    underlayColor="#1976D2"
+                    onPress={this._send}>
+                    <Text style={styles.button}>
+                        发送到我的kindle
+                    </Text>
+                </TouchableHighlight>
+
             </View>
         );
     }
@@ -80,19 +101,16 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
+    touchable: {
+        flex: 1,
+        backgroundColor: '#2196F3',
+        alignSelf: 'stretch',
+        margin: 2,
         height: 50,
-        borderWidth: 1,
         alignItems: 'center',
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
+        justifyContent: 'center'
     },
+    button: {},
 });
 
 module.exports = MainView;

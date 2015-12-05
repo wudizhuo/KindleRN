@@ -12,7 +12,7 @@ var {
 
 var KindleReact = React.createClass({
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             inputText: '',
         };
@@ -33,7 +33,6 @@ var KindleReact = React.createClass({
     _send() {
         ToastAndroid.show('PressSend Icon', ToastAndroid.SHORT)
     },
-
 
 
     render: function () {
@@ -77,6 +76,7 @@ var KindleReact = React.createClass({
 var styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
