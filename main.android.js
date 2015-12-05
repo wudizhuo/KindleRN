@@ -43,7 +43,9 @@ var MainView = React.createClass({
             <View style={styles.container}>
                 <View>
                     <TextInput
-                        style={{height: 220, borderColor: 'gray', borderWidth: 1}}
+                        style={styles.textInput}
+                        textAlignVertical="top"
+                        multiline={true}
                         onChangeText={(inputText) => this.setState({inputText})}
                         value={this.state.inputText}
                         />
@@ -100,6 +102,12 @@ var styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
+    },
+    textInput: {
+        fontSize:20,
+        height: 220,
+        borderColor: 'gray',
+        borderWidth: 1,
     },
     touchable: {
         flex: 1,
