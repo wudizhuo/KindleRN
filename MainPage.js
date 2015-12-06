@@ -34,8 +34,10 @@ var MainView = React.createClass({
     },
 
     _preview() {
+        this.setState({"url": this.state.inputText});
         this.props.navigator.push({
             name: 'preview',
+            url: this.state.inputText
         });
     },
 
@@ -59,12 +61,10 @@ var MainView = React.createClass({
                             />
                     </View>
                     <View style={{
-                        display:'flex',
                         flex: 1,
                         width:Dimensions.get('window').width,
                         flexDirection:'row',
                         alignSelf: 'stretch',
-                        alignItem: 'stretch',
                         justifyContent:'space-around',
                         }
                     }>

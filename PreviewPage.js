@@ -19,7 +19,7 @@ var Preview = React.createClass({
 
     getInitialState: function () {
         return {
-            url: DEFAULT_URL,
+            url: this.props.data,
             status: 'No Page Loaded',
             backButtonEnabled: false,
             forwardButtonEnabled: false,

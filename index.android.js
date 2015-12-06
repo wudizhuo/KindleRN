@@ -16,6 +16,7 @@ var Preview = require('./PreviewPage');
 
 var RouteMapper = function (route, navigationOperations, onComponentRef) {
     var Component = null;
+    var Data = null;
     _navigator = navigationOperations;
     switch (route.name) {
         case "main":
@@ -23,11 +24,15 @@ var RouteMapper = function (route, navigationOperations, onComponentRef) {
             break;
         case "preview":
             Component = Preview;
+            Data = route.url;
             break;
         default: //default view
             Component = MainView;
     }
-    return <Component navigator={navigationOperations}/>
+    return <Component
+                navigator={navigationOperations}
+                data={Data}
+            />
 };
 
 var KindleReact = React.createClass({
