@@ -6,22 +6,28 @@ var {
     AppRegistry,
     View,
     Navigator,
-    ToolbarAndroid,
-    Text,
     BackAndroid,
     StyleSheet,
     } = React;
 
 var _navigator;
-var MainView = require('./main.android');
+var MainView = require('./MainPage');
+var Preview = require('./PreviewPage');
 
 var RouteMapper = function (route, navigationOperations, onComponentRef) {
+    var Component = null;
     _navigator = navigationOperations;
-    if (route.name === 'main') {
-        return (
-            <MainView navigator={navigationOperations}/>
-        );
+    switch (route.name) {
+        case "main":
+            Component = MainView;
+            break;
+        case "preview":
+            Component = Preview;
+            break;
+        default: //default view
+            Component = MainView;
     }
+    return <Component navigator={navigationOperations}/>
 };
 
 var KindleReact = React.createClass({
@@ -30,68 +36,37 @@ var KindleReact = React.createClass({
     },
 
     getInitialState: function () {
-        return {
-            kindle: this._getHome(),
-            colorProps: {
-                titleColor: '#FFFFFF',
-                subtitleColor: '#6a7180',
-            },
-        };
+        return {};
     },
 
     componentWillMount: function () {
         BackAndroid.addEventListener('hardwareBackPress', this._handleBackButtonPress);
     },
 
-    _getHome: function () {
-        return {
-            title: 'Kindle 助手',
-            component: this._renderHome(),
-        };
+    componentWillUnmount() {
+        BackAndroid.removeEventListener('hardwareBackPress');
     },
 
     render() {
         return (
-            <View>
-                {this._renderNavigation()}
-            </View>
+            <Navigator
+                initialRoute={'main'}
+                configureScene={this.configureScene}
+                renderScene={RouteMapper}
+                />
         );
     },
 
-    _renderHome: function () {
-        return React.createClass({
-            render: function () {
-                return (
-                    <MainView/>
-                );
-            }
-        });
-    },
-
-    _renderNavigation: function () {
-        var Component = this.state.kindle.component;
-        return (
-            <View style={styles.container}>
-                <ToolbarAndroid
-                    style={styles.toolbar}
-                    title={this.state.kindle.title}
-                    {...this.state.colorProps}
-                    />
-                <Component />
-            </View>
-        );
+    _handleBackButtonPress: function () {
+        if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+            _navigator.pop();
+            return true;
+        }
+        return false;
     },
 });
 
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    toolbar: {
-        backgroundColor: '#2196F3',
-        height: 56,
-    },
-});
+var styles = StyleSheet.create({});
 
 AppRegistry.registerComponent('KindleReact', () => KindleReact);
 

@@ -6,6 +6,7 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "react-native": "^0.15.0"
+    "react-native": "^0.15.0",
+    "react-native-webview-android": "^1.0.11"
   }
 }
