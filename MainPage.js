@@ -21,7 +21,7 @@ var MainView = React.createClass({
 
     getInitialState: function () {
         return {
-            inputText: '',
+            inputText: 'http://www.kindlezhushou.com 电脑端 欢迎使用',
         };
     },
 
@@ -33,8 +33,8 @@ var MainView = React.createClass({
         });
     },
 
+    //TODO post code post
     _preview() {
-        this.setState({"url": this.state.inputText});
         this.props.navigator.push({
             name: 'preview',
             url: this.state.inputText
