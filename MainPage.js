@@ -20,7 +20,7 @@ var MenuList = require('./MenuListPage');
 
 
 var DRAWER_REF = 'drawer';
-var DRAWER_WIDTH_LEFT = 86;
+var DRAWER_WIDTH_LEFT = 180;
 
 var MainView = React.createClass({
 
@@ -143,7 +143,7 @@ var MainView = React.createClass({
 
 var styles = StyleSheet.create({
     toolbar: {
-        backgroundColor: '#2196F3',
+        backgroundColor: '#03A9F4',
         height: 56,
     },
     textInput: {
@@ -154,7 +154,7 @@ var styles = StyleSheet.create({
     },
     touchable: {
         flex: 1,
-        backgroundColor: '#2196F3',
+        backgroundColor: '#03A9F4',
         alignSelf: 'stretch',
         margin: 2,
         height: 50,
