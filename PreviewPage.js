@@ -5,7 +5,6 @@ var {
     View,
     Text,
     StyleSheet,
-    ToolbarAndroid,
     ToastAndroid,
     } = React;
 

@@ -10,18 +10,27 @@ var {
     ToastAndroid,
     Navigator,
     TouchableHighlight,
+    DrawerLayoutAndroid,
     TouchableOpacity,
     } = React;
 
 var Dimensions = require('Dimensions');
 var preview = require('./PreviewPage');
-var ToolbarView = require('./ToolbarView');
+var MenuList = require('./MenuListPage');
+
+
+var DRAWER_REF = 'drawer';
+var DRAWER_WIDTH_LEFT = 86;
 
 var MainView = React.createClass({
 
     getInitialState: function () {
         return {
             inputText: 'http://www.kindlezhushou.com 电脑端 欢迎使用',
+            colorProps: {
+                titleColor: '#FFFFFF',
+                subtitleColor: '#6a7180',
+            },
         };
     },
 
@@ -45,11 +54,42 @@ var MainView = React.createClass({
         ToastAndroid.show('PressSend Icon', ToastAndroid.SHORT)
     },
 
-
     render: function () {
         return (
+            <DrawerLayoutAndroid
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                drawerWidth={Dimensions.get('window').width - DRAWER_WIDTH_LEFT}
+                keyboardDismissMode="on-drag"
+                ref={DRAWER_REF}
+                renderNavigationView={this._renderNavigationView}>
+                {this._contentView()}
+            </DrawerLayoutAndroid>
+        );
+    },
+
+    _renderNavigationView: function () {
+        return (
+            <MenuList
+                />
+        );
+    },
+
+    onSelectTheme: function (theme) {
+        this.refs[DRAWER_REF].closeDrawer();
+        this.setState({theme: theme});
+    },
+
+    _contentView: function () {
+        return (
             <View>
-                <ToolbarView />
+                <ToolbarAndroid
+                    navIcon={require('image!ic_menu_white')}
+                    onIconClicked={() => this.refs[DRAWER_REF].openDrawer()}
+                    style={styles.toolbar}
+                    title={'Kindle 助手'}
+                    navigator={this.props.navigator}
+                    {...this.state.colorProps}
+                    />
                 <View>
                     <View>
                         <TextInput
@@ -72,22 +112,18 @@ var MainView = React.createClass({
                             style={styles.touchable}
                             underlayColor="#1976D2"
                             onPress={this._clean}>
-                            <View>
-                                <Text style={styles.button}>
-                                    清除内容
-                                </Text>
-                            </View>
+                            <Text style={styles.button}>
+                                清除内容
+                            </Text>
                         </TouchableHighlight>
 
                         <TouchableHighlight
                             style={styles.touchable}
                             underlayColor="#1976D2"
                             onPress={this._preview}>
-                            <View>
-                                <Text style={styles.button}>
-                                    预览内容
-                                </Text>
-                            </View>
+                            <Text style={styles.button}>
+                                预览内容
+                            </Text>
                         </TouchableHighlight>
                     </View>
 
@@ -102,10 +138,14 @@ var MainView = React.createClass({
                 </View>
             </View>
         );
-    }
+    },
 });
 
 var styles = StyleSheet.create({
+    toolbar: {
+        backgroundColor: '#2196F3',
+        height: 56,
+    },
     textInput: {
         fontSize: 20,
         height: 220,
@@ -121,7 +161,9 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    button: {},
+    button: {
+        color: '#FFFFFF',
+    },
 });
 
 module.exports = MainView;
