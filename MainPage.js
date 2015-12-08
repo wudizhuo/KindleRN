@@ -54,6 +54,14 @@ var MainView = React.createClass({
         ToastAndroid.show('PressSend Icon', ToastAndroid.SHORT)
     },
 
+
+    onSelectMenu: function() {
+        this.props.navigator.push({
+            name: 'setting',
+        });
+        this.refs[DRAWER_REF].closeDrawer();
+    },
+
     render: function () {
         return (
             <DrawerLayoutAndroid
@@ -70,6 +78,7 @@ var MainView = React.createClass({
     _renderNavigationView: function () {
         return (
             <MenuList
+                onSelectMenu={this.onSelectMenu}
                 />
         );
     },

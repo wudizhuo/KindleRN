@@ -4,6 +4,7 @@ var React = require('react-native');
 var {
     View,
     Text,
+    Navigator,
     StyleSheet,
     ToastAndroid,
     } = React;

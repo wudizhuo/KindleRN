@@ -15,14 +15,6 @@ var MenuListPage = React.createClass({
         return {};
     },
 
-    _onPressSetting() {
-        ToastAndroid.show('_onPressSetting Icon', ToastAndroid.SHORT)
-        //this.props.navigator.push({
-        //    name: 'preview',
-        //    url: this.state.inputText
-        //});
-    },
-
     render: function () {
         return (
             <View style={styles.container}>
@@ -42,7 +34,7 @@ var MenuListPage = React.createClass({
                 <TouchableHighlight
                     style={styles.touchable}
                     underlayColor="#B3E5FC"
-                    onPress={this._onPressSetting}>
+                    onPress={this.props.onSelectMenu}>
                     <Text style={styles.text}>
                         设置
                     </Text>

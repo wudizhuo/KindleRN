@@ -21,6 +21,8 @@ var ToolbarView = React.createClass({
         return (
             <ToolbarAndroid
                 style={styles.toolbar}
+                navIcon={require('image!android_back_white')}
+                onIconClicked={this.props.onBackClicked}
                 title={'Kindle 助手'}
                 navigator={this.props.navigator}
                 {...this.state.colorProps}

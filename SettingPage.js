@@ -8,66 +8,67 @@ var {
     View,
     TextInput,
     ToastAndroid,
+    TouchableHighlight,
     } = React;
 
-var KindleReact = React.createClass({
+var WebViewAndroid = require('react-native-webview-android');
+
+var ToolbarView = require('./ToolbarView');
+
+var Dimensions = require('Dimensions');
+
+var SettingPage = React.createClass({
 
     getInitialState: function () {
-        return {
-            inputText: '',
-        };
+        return {};
     },
-
-    _clean() {
-        this.setState((state) => {
-            return {
-                inputText: '',
-            };
-        });
-    },
-
-    _preview() {
-        ToastAndroid.show('Press _preview Icon', ToastAndroid.SHORT)
-    },
-
-    _send() {
-        ToastAndroid.show('PressSend Icon', ToastAndroid.SHORT)
-    },
-
 
     render: function () {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Kindle助手
-                </Text>
+                <ToolbarView
+                    onBackClicked={this.props.navigator.pop}
+                    />
                 <View>
                     <TextInput
-                        style={{height: 220, borderColor: 'gray', borderWidth: 1}}
+                        style={styles.textInput}
+                        textAlignVertical="top"
+                        placeholder="请填入一个您的认可列表的邮箱"
                         onChangeText={(inputText) => this.setState({inputText})}
                         value={this.state.inputText}
                         />
-                </View>
-                <View style={{
-                    flexDirection:'row'
-                    }
-                }>
-                    <Text style={styles.instructions}
-                          onPress={this._clean}
+
+                    <TextInput
+                        style={styles.textInput}
+                        textAlignVertical="top"
+                        placeholder="请填入您的kindle接收邮箱"
+                        onChangeText={(inputText) => this.setState({inputText})}
+                        value={this.state.inputText}
+                        />
+
+                    <TouchableHighlight
+                        style={styles.touchable}
+                        underlayColor="#1976D2"
                         >
-                        清除内容
-                    </Text>
-                    <Text style={styles.instructions}
-                          onPress={this._preview}
-                        >
-                        预览内容
-                    </Text>
+                        <Text style={styles.button}>
+                            完成
+                        </Text>
+                    </TouchableHighlight>
                 </View>
-                <Text style={styles.instructions}
-                      onPress={this._send}
-                    >
-                    发送到我的kindle
-                </Text>
+
+
+                <WebViewAndroid
+                    javaScriptEnabled={true}
+                    javaScriptEnabledAndroid={true}
+                    onNavigationStateChange={this.onNavigationStateChange}
+                    onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                    startInLoadingState={true}
+                    scalesPageToFit={this.state.scalesPageToFit}
+                    geolocationEnabled={false}
+                    builtInZoomControls={false}
+                    style={styles.containerWebView}
+                    url={"file:///android_asset/kindle.html"}
+                    />
             </View>
         );
     }
@@ -76,23 +77,30 @@ var KindleReact = React.createClass({
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    containerWebView: {
+        marginTop: 5,
+        flex: 1,
+        height: 200,
     },
-    instructions: {
-        height: 50,
+    textInput: {
+        marginTop: 5,
+        fontSize: 16,
+        borderColor: '#03A9F4',
         borderWidth: 1,
+    },
+    touchable: {
+        flex: 1,
+        backgroundColor: '#03A9F4',
+        alignSelf: 'stretch',
+        margin: 2,
+        height: 50,
         alignItems: 'center',
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
+        justifyContent: 'center'
+    },
+    button: {
+        color: '#FFFFFF',
     },
 });
 
-AppRegistry.registerComponent('KindleReact', () => KindleReact);
+module.exports = SettingPage;

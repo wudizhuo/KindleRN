@@ -13,6 +13,7 @@ var {
 var _navigator;
 var MainView = require('./MainPage');
 var Preview = require('./PreviewPage');
+var SettingPage = require('./SettingPage');
 
 var RouteMapper = function (route, navigationOperations, onComponentRef) {
     var Component = null;
@@ -25,6 +26,9 @@ var RouteMapper = function (route, navigationOperations, onComponentRef) {
         case "preview":
             Component = Preview;
             Data = route.url;
+            break;
+        case "setting":
+            Component = SettingPage;
             break;
         default: //default view
             Component = MainView;
