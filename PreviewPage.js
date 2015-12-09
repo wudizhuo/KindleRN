@@ -11,7 +11,7 @@ var {
 
 var WebViewAndroid = require('react-native-webview-android');
 
-var ToolbarView = require('./ToolbarView');
+var ToolbarView = require('./ToolBarView');
 
 var DEFAULT_URL = 'http://www.kindlezhushou.com';
 

@@ -6,7 +6,7 @@ var {
     StyleSheet,
     } = React;
 
-var ToolbarView = React.createClass({
+var ToolBarView = React.createClass({
 
     getInitialState: function () {
         return {
@@ -38,4 +38,4 @@ var styles = StyleSheet.create({
     },
 });
 
-module.exports = ToolbarView;
+module.exports = ToolBarView;
