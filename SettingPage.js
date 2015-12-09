@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var {
-    AppRegistry,
+    AsyncStorage,
     StyleSheet,
     Text,
     View,
@@ -20,7 +20,27 @@ var Dimensions = require('Dimensions');
 var SettingPage = React.createClass({
 
     getInitialState: function () {
-        return {};
+        return {
+            from_email: '',
+            receive_email: '',
+        };
+    },
+
+    componentDidMount: function () {
+        AsyncStorage.getItem("from_email").then((value) => {
+            console.log("--value---" + value);
+            this.setState({from_email: value});
+        }).done();
+        AsyncStorage.getItem("receive_email").then((value) => {
+            console.log("--value---" + value);
+            this.setState({receive_email: value});
+        }).done();
+    },
+
+    _complete() {
+        AsyncStorage.setItem("from_email", this.state.from_email);
+        AsyncStorage.setItem("receive_email", this.state.receive_email);
+        this.props.navigator.pop();
     },
 
     render: function () {
@@ -34,22 +54,22 @@ var SettingPage = React.createClass({
                         style={styles.textInput}
                         textAlignVertical="top"
                         placeholder="请填入一个您的认可列表的邮箱"
-                        onChangeText={(inputText) => this.setState({inputText})}
-                        value={this.state.inputText}
+                        onChangeText={(from_email) => this.setState({from_email:from_email})}
+                        value={this.state.from_email}
                         />
 
                     <TextInput
                         style={styles.textInput}
                         textAlignVertical="top"
                         placeholder="请填入您的kindle接收邮箱"
-                        onChangeText={(inputText) => this.setState({inputText})}
-                        value={this.state.inputText}
+                        onChangeText={(receive_email) => this.setState({receive_email:receive_email})}
+                        value={this.state.receive_email}
                         />
 
                     <TouchableHighlight
                         style={styles.touchable}
                         underlayColor="#1976D2"
-                        >
+                        onPress={this._complete}>
                         <Text style={styles.button}>
                             完成
                         </Text>
