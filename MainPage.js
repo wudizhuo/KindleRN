@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
     StyleSheet,
+    AsyncStorage,
     Text,
     ToolbarAndroid,
     View,
@@ -21,6 +22,8 @@ var MenuList = require('./MenuListPage');
 
 var DRAWER_REF = 'drawer';
 var DRAWER_WIDTH_LEFT = 180;
+
+var BASE_URL = 'http://kindlezhushou.com/V2/';
 
 var MainView = React.createClass({
 
@@ -51,11 +54,50 @@ var MainView = React.createClass({
     },
 
     _send() {
-        ToastAndroid.show('PressSend Icon', ToastAndroid.SHORT)
+        AsyncStorage.getItem("from_email").then((value) => {
+            this.setState({from_email: value});
+        }).done();
+        AsyncStorage.getItem("receive_email").then((value) => {
+            this.setState({receive_email: value});
+        }).done();
+
+        var post_data = {
+            url: this.state.inputText,
+            from_email: this.state.from_email,
+            to_email: this.state.receive_email
+        }
+
+        var reqUrl = BASE_URL + "send/url";
+
+        fetch(reqUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(post_data)
+        }).then((response) => response.json())
+            .then((responseText) => {
+                console.log(responseText);
+                if (responseText.status != 0) {
+                    ToastAndroid.show(responseText.msg, ToastAndroid.SHORT);
+                } else {
+                    ToastAndroid.show("发送成功", ToastAndroid.SHORT);
+                }
+                this.setState({
+                    isLoading: false,
+                });
+            })
+            .catch((error) => {
+                this.setState({
+                    isLoading: false,
+                });
+            });
+
     },
 
 
-    onSelectMenu: function() {
+    onSelectMenu: function () {
         this.props.navigator.push({
             name: 'setting',
         });
