@@ -45,7 +45,8 @@ var MainView = React.createClass({
         });
     },
 
-    //TODO post code post
+    //TODO code loading
+    //TODO  连接友盟 升级 统计和反馈 这个最重要
     _preview() {
         this.props.navigator.push({
             name: 'preview',
@@ -56,10 +57,22 @@ var MainView = React.createClass({
     _send() {
         AsyncStorage.getItem("from_email").then((value) => {
             this.setState({from_email: value});
+            if (value == null) {
+                this.goToSetting();
+                return;
+            }
         }).done();
         AsyncStorage.getItem("receive_email").then((value) => {
             this.setState({receive_email: value});
+            if (value == null) {
+                this.goToSetting();
+                return;
+            }
         }).done();
+
+        this.setState({
+            isLoading: true,
+        });
 
         var post_data = {
             url: this.state.inputText,
@@ -98,10 +111,14 @@ var MainView = React.createClass({
 
 
     onSelectMenu: function () {
+        this.goToSetting();
+        this.refs[DRAWER_REF].closeDrawer();
+    },
+
+    goToSetting: function () {
         this.props.navigator.push({
             name: 'setting',
         });
-        this.refs[DRAWER_REF].closeDrawer();
     },
 
     render: function () {
