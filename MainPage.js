@@ -9,6 +9,7 @@ var {
     View,
     TextInput,
     ToastAndroid,
+    ProgressBarAndroid,
     Navigator,
     TouchableHighlight,
     DrawerLayoutAndroid,
@@ -29,7 +30,8 @@ var MainView = React.createClass({
 
     getInitialState: function () {
         return {
-            inputText: 'http://www.kindlezhushou.com 电脑端 欢迎使用',
+            inputText: 'http://wiki.jikexueyuan.com/project/react/',
+            isLoading: false,
             colorProps: {
                 titleColor: '#FFFFFF',
                 subtitleColor: '#6a7180',
@@ -45,7 +47,6 @@ var MainView = React.createClass({
         });
     },
 
-    //TODO code loading
     //TODO  连接友盟 升级 统计和反馈 这个最重要
     _preview() {
         this.props.navigator.push({
@@ -129,6 +130,14 @@ var MainView = React.createClass({
                 keyboardDismissMode="on-drag"
                 ref={DRAWER_REF}
                 renderNavigationView={this._renderNavigationView}>
+                <ToolbarAndroid
+                    navIcon={require('image!ic_menu_white')}
+                    onIconClicked={() => this.refs[DRAWER_REF].openDrawer()}
+                    style={styles.toolbar}
+                    title={'Kindle 助手'}
+                    navigator={this.props.navigator}
+                    {...this.state.colorProps}
+                    />
                 {this._contentView()}
             </DrawerLayoutAndroid>
         );
@@ -148,27 +157,31 @@ var MainView = React.createClass({
     },
 
     _contentView: function () {
-        return (
-            <View>
-                <ToolbarAndroid
-                    navIcon={require('image!ic_menu_white')}
-                    onIconClicked={() => this.refs[DRAWER_REF].openDrawer()}
-                    style={styles.toolbar}
-                    title={'Kindle 助手'}
-                    navigator={this.props.navigator}
-                    {...this.state.colorProps}
-                    />
+        if (this.state.isLoading) {
+            return (
+                <View style={[styles.container, styles.center]}>
+                    <ProgressBarAndroid styleAttr="Inverse"/>
+                    <Text
+                        style={{
+                            marginTop:20
+                        }}
+                        >发送中....</Text>
+                </View>
+            );
+        } else {
+            return (
                 <View>
                     <View>
-                        <TextInput
-                            style={styles.textInput}
-                            textAlignVertical="top"
-                            multiline={true}
-                            onChangeText={(inputText) => this.setState({inputText})}
-                            value={this.state.inputText}
-                            />
-                    </View>
-                    <View style={{
+                        <View>
+                            <TextInput
+                                style={styles.textInput}
+                                textAlignVertical="top"
+                                multiline={true}
+                                onChangeText={(inputText) => this.setState({inputText})}
+                                value={this.state.inputText}
+                                />
+                        </View>
+                        <View style={{
                         flex: 1,
                         width:Dimensions.get('window').width,
                         flexDirection:'row',
@@ -176,36 +189,38 @@ var MainView = React.createClass({
                         justifyContent:'space-around',
                         }
                     }>
-                        <TouchableHighlight
-                            style={styles.touchable}
-                            underlayColor="#1976D2"
-                            onPress={this._clean}>
-                            <Text style={styles.button}>
-                                清除内容
-                            </Text>
-                        </TouchableHighlight>
+                            <TouchableHighlight
+                                style={styles.touchable}
+                                underlayColor="#1976D2"
+                                onPress={this._clean}>
+                                <Text style={styles.button}>
+                                    清除内容
+                                </Text>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight
+                                style={styles.touchable}
+                                underlayColor="#1976D2"
+                                onPress={this._preview}>
+                                <Text style={styles.button}>
+                                    预览内容
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
 
                         <TouchableHighlight
                             style={styles.touchable}
                             underlayColor="#1976D2"
-                            onPress={this._preview}>
+                            onPress={this._send}>
                             <Text style={styles.button}>
-                                预览内容
+                                发送到我的kindle
                             </Text>
                         </TouchableHighlight>
                     </View>
-
-                    <TouchableHighlight
-                        style={styles.touchable}
-                        underlayColor="#1976D2"
-                        onPress={this._send}>
-                        <Text style={styles.button}>
-                            发送到我的kindle
-                        </Text>
-                    </TouchableHighlight>
                 </View>
-            </View>
-        );
+            )
+        }
+        ;
     },
 });
 
@@ -231,6 +246,13 @@ var styles = StyleSheet.create({
     },
     button: {
         color: '#FFFFFF',
+    },
+    container: {
+        flex: 1,
+    },
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

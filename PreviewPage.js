@@ -4,6 +4,7 @@ var React = require('react-native');
 var {
     View,
     Text,
+    ProgressBarAndroid,
     Navigator,
     StyleSheet,
     ToastAndroid,
@@ -88,10 +89,29 @@ var Preview = React.createClass({
     },
 
     render: function () {
-        console.log("---render----" + this.state.response.content);
         return (
             <View style={styles.container}>
-                <ToolbarView />
+                <ToolbarView onBackClicked={this.props.navigator.pop}/>
+                {this._contentView()}
+            </View>
+        );
+    },
+
+    _contentView: function () {
+        console.log("---render----" + this.state.response.content);
+        if (this.state.isLoading) {
+            return (
+                <View style={[styles.container, styles.center]}>
+                    <ProgressBarAndroid styleAttr="Inverse"/>
+                    <Text
+                        style={{
+                            marginTop:20
+                        }}
+                        >发送中....</Text>
+                </View>
+            );
+        } else {
+            return (
                 <WebViewAndroid
                     javaScriptEnabled={true}
                     javaScriptEnabledAndroid={true}
@@ -104,8 +124,8 @@ var Preview = React.createClass({
                     style={styles.containerWebView}
                     html={this.state.response.content}
                     />
-            </View>
-        );
+            );
+        }
     }
 });
 
@@ -116,7 +136,11 @@ var styles = StyleSheet.create({
     containerWebView: {
         flex: 1,
         height: 200,
-    }
+    },
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 module.exports = Preview;
