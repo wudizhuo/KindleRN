@@ -54,7 +54,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.kindlereact"
+        applicationId "com.kindleassistant"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -63,6 +63,12 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+
+    repositories {
+        mavenCentral()
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false  // Set this to true to enable Proguard
