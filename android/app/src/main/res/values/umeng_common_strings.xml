@@ -12,4 +12,5 @@
 	<string name="umeng_common_download_failed">下载失败</string>
 	<string name="umeng_common_download_finish">下载完成，请点击安装</string>
 	<string name="umeng_common_patch_finish">更新完成，请点击安装</string>
+	<string name="umeng_common_icon">icon</string>
 </resources>
