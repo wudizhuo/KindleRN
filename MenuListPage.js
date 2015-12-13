@@ -48,7 +48,8 @@ var MenuListPage = React.createClass({
                 <RNUmengFeedBackView
                     style={styles.touchable}
                     text="反馈"
-                    textSize="20"
+                    textSize={20}
+                    textColor='#03A9F4'
                     umengFunc='feedback'/>
                 <View
                     style={styles.divider}
@@ -65,6 +66,7 @@ var styles = StyleSheet.create({
     },
     touchable_header: {
         height: 108,
+        paddingLeft:16,
         justifyContent: 'center',
     },
 
@@ -76,7 +78,6 @@ var styles = StyleSheet.create({
 
     text: {
         fontSize: 20,
-        marginLeft: 16,
         color: '#03A9F4',
     },
     divider: {

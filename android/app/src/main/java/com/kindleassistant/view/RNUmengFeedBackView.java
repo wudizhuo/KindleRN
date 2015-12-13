@@ -1,10 +1,10 @@
 package com.kindleassistant.view;
 
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.react.uimanager.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -50,15 +50,13 @@ public class RNUmengFeedBackView extends SimpleViewManager<TextView> {
     }
 
     @ReactProp(name = "textSize", defaultFloat = 12f)
-    public void setTextSize(TextView view, float textsize) {
-        Toast.makeText(context,"---setTextColor---",Toast.LENGTH_LONG).show();
-        Toast.makeText(context,"---setTextColor---"+textsize,Toast.LENGTH_LONG).show();
-        view.setTextSize(textsize);
+    public void setTextSize(TextView view, float textSize) {
+        view.setTextSize(textSize);
     }
 
-    @ReactProp(name = "textColor", defaultInt = 0x000000)
-    public void setTextColor(TextView view, int textColor) {
-        view.setTextColor(textColor);
+    @ReactProp(name = "textColor")
+    public void setTextColor(TextView view, String textColor) {
+        view.setTextColor(Color.parseColor(textColor));
     }
 
 
