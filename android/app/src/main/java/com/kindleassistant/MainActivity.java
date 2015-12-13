@@ -67,6 +67,8 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onPause();
         }
+
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -76,5 +78,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onResume(this, this);
         }
+
+        MobclickAgent.onResume(this);
     }
 }

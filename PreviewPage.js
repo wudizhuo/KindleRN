@@ -81,8 +81,6 @@ var Preview = React.createClass({
         });
     },
 
-    //TODO 显示loading
-
     onShouldStartLoadWithRequest: function (event) {
         // Implement any custom loading logic here, don't forget to return!
         return true;

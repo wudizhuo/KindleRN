@@ -47,7 +47,6 @@ var MainView = React.createClass({
         });
     },
 
-    //TODO  连接友盟 升级 统计和反馈 这个最重要
     _preview() {
         this.props.navigator.push({
             name: 'preview',
