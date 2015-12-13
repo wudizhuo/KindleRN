@@ -2,12 +2,15 @@
 
 var React = require('react-native');
 var {
+    requireNativeComponent,
     View,
     Text,
     TouchableHighlight,
     ToastAndroid,
     StyleSheet,
     } = React;
+
+var RNUmengFeedBackView = requireNativeComponent('RNUmengFeedBackView');
 
 var MenuListPage = React.createClass({
 
@@ -42,6 +45,14 @@ var MenuListPage = React.createClass({
                 <View
                     style={styles.divider}
                     />
+                <RNUmengFeedBackView
+                    style={styles.touchable}
+                    text="反馈"
+                    textSize="20"
+                    umengFunc='feedback'/>
+                <View
+                    style={styles.divider}
+                    />
             </View>
         );
     }
@@ -54,13 +65,13 @@ var styles = StyleSheet.create({
     },
     touchable_header: {
         height: 108,
-        justifyContent:'center',
+        justifyContent: 'center',
     },
 
     touchable: {
         height: 66,
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
     },
 
     text: {
