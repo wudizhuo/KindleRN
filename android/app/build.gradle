@@ -68,6 +68,11 @@ android {
         mavenCentral()
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 
     buildTypes {
         release {

@@ -2,11 +2,7 @@ package com.kindleassistant;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.text.TextUtils;
-import android.util.Log;
 
-import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -41,6 +37,10 @@ public class App extends Application {
 
         FeedbackAgent agent = new FeedbackAgent(this);
         agent.sync();
+    }
+
+    public static App getApp() {
+        return app;
     }
 
     public static Context getContext() {
