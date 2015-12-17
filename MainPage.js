@@ -10,10 +10,8 @@ var {
     TextInput,
     ToastAndroid,
     ProgressBarAndroid,
-    Navigator,
     TouchableHighlight,
     DrawerLayoutAndroid,
-    TouchableOpacity,
     } = React;
 
 var Dimensions = require('Dimensions');
@@ -148,11 +146,6 @@ var MainView = React.createClass({
                 onSelectMenu={this.onSelectMenu}
                 />
         );
-    },
-
-    onSelectTheme: function (theme) {
-        this.refs[DRAWER_REF].closeDrawer();
-        this.setState({theme: theme});
     },
 
     _contentView: function () {

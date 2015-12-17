@@ -6,7 +6,6 @@ var {
     View,
     Text,
     TouchableHighlight,
-    ToastAndroid,
     StyleSheet,
     } = React;
 
