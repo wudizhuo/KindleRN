@@ -5,16 +5,12 @@ var {
     View,
     Text,
     ProgressBarAndroid,
-    Navigator,
     StyleSheet,
-    ToastAndroid,
     } = React;
 
 var WebViewAndroid = require('react-native-webview-android');
 
 var ToolbarView = require('./ToolBarView');
-
-var DEFAULT_URL = 'http://www.kindlezhushou.com';
 
 var BASE_URL = 'http://kindlezhushou.com/V2/';
 

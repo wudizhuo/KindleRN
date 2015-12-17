@@ -28,7 +28,7 @@ var MainView = React.createClass({
 
     getInitialState: function () {
         return {
-            inputText: 'http://wiki.jikexueyuan.com/project/react/',
+            inputText: 'http://www.kindlezhushou.com',
             isLoading: false,
             colorProps: {
                 titleColor: '#FFFFFF',
