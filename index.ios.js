@@ -1,53 +1,81 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
+
 var {
   AppRegistry,
+  Navigator,
+  BackAndroid,
   StyleSheet,
-  Text,
-  View,
-} = React;
+  } = React;
+
+var _navigator;
+var MainView = require('./MainPage');
+var Preview = require('./PreviewPage');
+var SettingPage = require('./SettingPage');
+
+var RouteMapper = function (route, navigationOperations, onComponentRef) {
+  var Component = null;
+  var Data = null;
+  _navigator = navigationOperations;
+  switch (route.name) {
+    case "main":
+      Component = MainView;
+      break;
+    case "preview":
+      Component = Preview;
+      Data = route.url;
+      break;
+    case "setting":
+      Component = SettingPage;
+      break;
+    default: //default view
+      Component = MainView;
+  }
+  return <Component
+    navigator={navigationOperations}
+    data={Data}
+  />
+};
 
 var KindleReact = React.createClass({
-  render: function() {
+  configureScene(route){
+    return Navigator.SceneConfigs.FadeAndroid;
+  },
+
+  getInitialState: function () {
+    return {};
+  },
+
+  componentWillMount: function () {
+    BackAndroid.addEventListener('hardwareBackPress', this._handleBackButtonPress);
+  },
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress');
+  },
+
+  render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Navigator
+        initialRoute={'main'}
+        configureScene={this.configureScene}
+        renderScene={RouteMapper}
+      />
     );
-  }
+  },
+
+  _handleBackButtonPress: function () {
+    if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+      _navigator.pop();
+      return true;
+    }
+    return false;
+  },
 });
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+var styles = StyleSheet.create({});
 
 AppRegistry.registerComponent('KindleReact', () => KindleReact);
+
+module.exports = KindleReact;
