@@ -10,4 +10,4 @@ Kindle助手App React实现版本
 
 #License
 
-this repository under the MIT license.
+this repository under the GPL license.
