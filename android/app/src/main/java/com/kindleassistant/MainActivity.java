@@ -1,6 +1,7 @@
 package com.kindleassistant;
 
 import android.app.Activity;
+import com.microsoft.codepush.react.CodePush;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
@@ -27,6 +28,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModuleName("index.android")
                 .addPackage(new MainReactPackage())
+                .addPackage(new CodePush(${androidDeploymentKey}, this, BuildConfig.DEBUG))
                 .addPackage(new RNWebViewPackage())
                 .addPackage(new CustomReactPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)

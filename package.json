@@ -8,7 +8,7 @@
   "dependencies": {
     "react": "15.1.0",
     "react-native": "^0.28.0",
-    "react-native-code-push": "^1.10.2-beta",
+    "react-native-code-push": "^1.13.1-beta",
     "react-native-webview-android": "^1.0.11"
   }
 }

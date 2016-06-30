@@ -2,3 +2,5 @@ rootProject.name = 'KindleReact'
 
 include ':RNWebView', ':app'
 project(':RNWebView').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-webview-android')
+include ':react-native-code-push'
+project(':react-native-code-push').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-code-push/android/app')
