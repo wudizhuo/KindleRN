@@ -1,6 +1,5 @@
 'use strict';
 
-var F8Colors = require('F8Colors');
 var StatusBarIOS = require('StatusBarIOS');
 var React = require('React');
 var TabBarIOS = require('TabBarIOS');
@@ -8,51 +7,54 @@ var TabBarItemIOS = require('TabBarItemIOS');
 var Navigator = require('Navigator');
 var MainView = require('./MainView');
 
-import type {Tab, Day} from '../reducers/navigation';
-
 class TabsView extends React.Component {
   props:{
-    tab: Tab;
-    day: Day;
-    onTabSelect: (tab: Tab) => void;
-    navigator: Navigator;
+    navigator: Navigator
     };
 
-  componentDidMount() {
-    StatusBarIOS && StatusBarIOS.setStyle('light-content');
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTab: 'main',
+      day: '',
+    };
   }
 
-  onTabSelect(tab:Tab) {
-    if (this.props.tab !== tab) {
-      this.props.onTabSelect(tab);
+  onTabSelect(tab) {
+    if (this.state.tab !== tab) {
+      this.setState(
+        {
+          selectedTab: tab
+        });
     }
   }
 
   render() {
     return (
-      <TabBarIOS tintColor={F8Colors.darkText}>
-        <TabBarItemIOS
+      <TabBarIOS
+        unselectedTintColor="yellow"
+        tintColor="white"
+        barTintColor="darkslateblue"
+      >
+        <TabBarIOS.Item
           title="主页"
-          selected={this.props.tab === 'main'}
+          selected={this.state.selectedTab === 'main'}
           onPress={this.onTabSelect.bind(this, 'main')}
         >
-          <MainView
-            navigator={this.props.navigator}
-          />
-        </TabBarItemIOS>
-        <TabBarItemIOS
+          <MainView/>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
           title="设置"
-          selected={this.props.tab === 'setting'}
+          selected={this.state.selectedTab === 'setting'}
           onPress={this.onTabSelect.bind(this, 'setting')}
         >
           <MainView
             navigator={this.props.navigator}
           />
-        </TabBarItemIOS>
+        </TabBarIOS.Item>
       </TabBarIOS>
     );
   }
-
 }
 
 module.exports = TabsView;
