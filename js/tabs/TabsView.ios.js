@@ -41,7 +41,9 @@ class TabsView extends React.Component {
           selected={this.state.selectedTab === 'main'}
           onPress={this.onTabSelect.bind(this, 'main')}
         >
-          <MainView/>
+          <MainView
+            navigator={this.props.navigator}
+          />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="设置"

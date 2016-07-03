@@ -5,6 +5,7 @@ var Platform = require('Platform');
 var StyleSheet = require('StyleSheet');
 var Navigator = require('Navigator');
 var TabsView = require('./tabs/TabsView');
+var PreviewView = require('./PreviewView');
 
 var AppNavigator = React.createClass({
 
@@ -30,8 +31,15 @@ var AppNavigator = React.createClass({
     );
   },
 
-  renderScene: function(route, navigator) {
-    return <TabsView navigator={navigator} />;
+  renderScene: function (route, navigator) {
+    if (route.preview) {
+      return (
+        <PreviewView
+          navigator={navigator}
+        />
+      );
+    }
+    return <TabsView navigator={navigator}/>;
   }
 
 });

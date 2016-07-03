@@ -11,6 +11,7 @@ var Dimensions = require('Dimensions');
 import {
   secondaryTextColor
 } from '../common/Colors';
+import Header from '../common/Header';
 
 class MainView extends Component {
 
@@ -28,9 +29,74 @@ class MainView extends Component {
       });
   }
 
+  _preview() {
+    this.props.navigator.push({
+      preview: true,
+      url: this.state.inputText
+    });
+  }
+
+  _send() {
+    AsyncStorage.getItem("from_email").then((value) => {
+      this.setState({from_email: value});
+      if (value == null) {
+        this.goToSetting();
+        return;
+      }
+    }).done();
+    AsyncStorage.getItem("receive_email").then((value) => {
+      this.setState({receive_email: value});
+      if (value == null) {
+        this.goToSetting();
+        return;
+      }
+    }).done();
+
+    this.setState({
+      isLoading: true,
+    });
+
+    var post_data = {
+      url: this.state.inputText,
+      from_email: this.state.from_email,
+      to_email: this.state.receive_email
+    }
+
+    var reqUrl = BASE_URL + "send/url";
+
+    fetch(reqUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(post_data)
+    }).then((response) => response.json())
+      .then((responseText) => {
+        console.log(responseText);
+        if (responseText.status != 0) {
+          ToastAndroid.show(responseText.msg, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show("发送成功", ToastAndroid.SHORT);
+        }
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <Header
+          title="Filter"
+        />
         <TextInput
           style={styles.textInput}
           textAlignVertical="top"
@@ -58,7 +124,7 @@ class MainView extends Component {
           <TouchableHighlight
             style={styles.touchable}
             underlayColor="#1976D2"
-            onPress={this._preview}>
+            onPress={this._preview.bind(this)}>
             <Text style={styles.button}>
               预览内容
             </Text>
@@ -68,7 +134,7 @@ class MainView extends Component {
         <TouchableHighlight
           style={styles.touchable}
           underlayColor="#1976D2"
-          onPress={this._send}>
+          onPress={this._send.bind(this)}>
           <Text style={styles.button}>
             发送到我的kindle
           </Text>
