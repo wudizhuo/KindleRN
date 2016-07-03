@@ -5,7 +5,10 @@ import {
   View,
   Text,
   StyleSheet,
-  } from 'react-native';
+  WebView,
+} from 'react-native';
+
+import Header from './common/Header';
 
 var BASE_URL = 'http://kindlezhushou.com/v3/';
 
@@ -13,8 +16,9 @@ var html = '<!DOCTYPE html><html><head></head><body>加载中。。。</body></h
 
 class PreviewView extends Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       url: this.props.data,
       status: 'No Page Loaded',
       backButtonEnabled: false,
@@ -27,7 +31,7 @@ class PreviewView extends Component {
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     var reqUrl = BASE_URL + "send/preview";
     this.setState({
       isLoading: true,
@@ -61,7 +65,7 @@ class PreviewView extends Component {
       });
   }
 
-  onNavigationStateChange (navState) {
+  onNavigationStateChange(navState) {
     this.setState({
       backButtonEnabled: navState.canGoBack,
       forwardButtonEnabled: navState.canGoForward,
@@ -80,41 +84,28 @@ class PreviewView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ToolbarView onBackClicked={this.props.navigator.pop}/>
+        <Header
+          title="Filter"/>
         {this._contentView()}
       </View>
     );
   }
 
   _contentView() {
-    console.log("---render----" + this.state.response.content);
-    if (this.state.isLoading) {
-      return (
-        <View style={[styles.container, styles.center]}>
-          <ProgressBarAndroid styleAttr="Inverse"/>
-          <Text
-            style={{
-                            marginTop:20
-                        }}
-          >发送中....</Text>
-        </View>
-      );
-    } else {
-      return (
-        <WebViewAndroid
-          javaScriptEnabled={true}
-          javaScriptEnabledAndroid={true}
-          onNavigationStateChange={this.onNavigationStateChange}
-          onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-          startInLoadingState={true}
-          scalesPageToFit={this.state.scalesPageToFit}
-          geolocationEnabled={false}
-          builtInZoomControls={false}
-          style={styles.containerWebView}
-          html={this.state.response.content}
-        />
-      );
-    }
+    return (
+      <WebView
+        automaticallyAdjustContentInsets={false}
+        style={styles.webView}
+        source={this.state.response.content}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        decelerationRate="normal"
+        onNavigationStateChange={this.onNavigationStateChange}
+        onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+        startInLoadingState={true}
+        scalesPageToFit={this.state.scalesPageToFit}
+      />
+    );
   }
 }
 
