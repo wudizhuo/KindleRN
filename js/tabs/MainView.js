@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,9 +8,6 @@ import {
   TouchableHighlight,
 } from 'react-native';
 var Dimensions = require('Dimensions');
-import {
-  secondaryTextColor
-} from '../common/Colors';
 import Header from '../common/Header';
 
 class MainView extends Component {
@@ -95,7 +92,7 @@ class MainView extends Component {
     return (
       <View style={styles.container}>
         <Header
-          title="Filter"
+          title="Kindle助手"
         />
         <TextInput
           style={styles.textInput}
@@ -105,11 +102,9 @@ class MainView extends Component {
           value={this.state.inputText}
         />
         <View style={{
-                        flex: 1,
                         width:Dimensions.get('window').width,
                         flexDirection:'row',
-                        alignSelf: 'stretch',
-                        justifyContent:'space-around',
+                        height: 50,
                         }
                     }>
           <TouchableHighlight
@@ -130,15 +125,22 @@ class MainView extends Component {
             </Text>
           </TouchableHighlight>
         </View>
-
-        <TouchableHighlight
-          style={styles.touchable}
-          underlayColor="#1976D2"
-          onPress={this._send.bind(this)}>
-          <Text style={styles.button}>
-            发送到我的kindle
-          </Text>
-        </TouchableHighlight>
+        <View style={{
+          height: 55,
+          width:Dimensions.get('window').width,
+          marginTop:8,
+        }}>
+          <TouchableHighlight
+            style={styles.touchable}
+            onPress={this._send.bind(this)}>
+            <Text style={styles.button}>
+              发送到我的kindle
+            </Text>
+          </TouchableHighlight>
+        </View>
+        <View style={{
+          flex:1,
+        }}></View>
       </View>
     );
   }

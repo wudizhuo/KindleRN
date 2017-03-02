@@ -1,6 +1,6 @@
 'use strict';
 var React = require('React');
-var App = require('./App');
+import App from '@js/App';
 
 function setup():ReactClass<{}> {
 
