@@ -19,7 +19,7 @@ class PreviewView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: this.props.data,
+      url: this.props.url,
       status: 'No Page Loaded',
       backButtonEnabled: false,
       forwardButtonEnabled: false,

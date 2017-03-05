@@ -1,4 +1,4 @@
 import {AppRegistry} from 'react-native';
-import setup from './js/setup';
+import App from './js/App';
 
-AppRegistry.registerComponent('KindleRN', setup);
+AppRegistry.registerComponent('KindleRN', () => App);

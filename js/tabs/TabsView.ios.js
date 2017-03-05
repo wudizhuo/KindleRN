@@ -5,7 +5,7 @@ var React = require('React');
 var TabBarIOS = require('TabBarIOS');
 var TabBarItemIOS = require('TabBarItemIOS');
 var Navigator = require('Navigator');
-var MainView = require('./MainView');
+var MainView = require('./../MainView');
 
 class TabsView extends React.Component {
   props:{

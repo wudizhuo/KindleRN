@@ -1,16 +1,19 @@
-'use strict';
-import React, {
-  Component,
-} from 'react';
+import MainView from '@js/MainView';
+import PreviewView from '@js/PreviewView';
+import React, {Component} from 'react';
+import {Router, Scene} from 'react-native-router-flux';
+import {primaryColor} from '@js/common/Colors';
 
-var AppNavigator = require('./AppNavigator');
-
-var App = React.createClass({
+export default class App extends Component {
   render() {
     return (
-      <AppNavigator/>
-    );
+      <Router>
+        <Scene key="root">
+          <Scene key="MainView" component={MainView} title="Kindle助手" titleStyle={{color:'white'}}
+                 navigationBarStyle={{backgroundColor:primaryColor}} initial={true}/>
+          <Scene key="PreviewView" component={PreviewView} title="PreviewView"/>
+        </Scene>
+      </Router>
+    )
   }
-});
-
-module.exports = App;
+}

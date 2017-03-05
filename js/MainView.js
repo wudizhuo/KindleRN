@@ -8,10 +8,10 @@ import {
   TouchableHighlight,
 } from 'react-native';
 var Dimensions = require('Dimensions');
-import Header from '../common/Header';
+import Header from '@js/common/Header';
+import { Actions } from 'react-native-router-flux';
 
-class MainView extends Component {
-
+class MainView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,10 +27,7 @@ class MainView extends Component {
   }
 
   _preview() {
-    this.props.navigator.push({
-      preview: true,
-      url: this.state.inputText
-    });
+    Actions.PreviewView({url: this.state.inputText});
   }
 
   _send() {
