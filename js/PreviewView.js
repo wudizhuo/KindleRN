@@ -1,5 +1,5 @@
-'use strict';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import axios from 'axios';
 
 import {
   View,
@@ -8,9 +8,7 @@ import {
   WebView,
 } from 'react-native';
 
-import Header from './common/Header';
-
-var BASE_URL = 'http://kindlezhushou.com/v3/';
+var BASE_URL = 'http://api.kindlezhushou.com/v3/';
 
 var html = '<!DOCTYPE html><html><head></head><body>加载中。。。</body></html>';
 
@@ -25,55 +23,37 @@ class PreviewView extends Component {
       forwardButtonEnabled: false,
       loading: true,
       scalesPageToFit: true,
-      response: {
-        content: html
-      }
+      content: html
     };
   }
 
   componentDidMount() {
-    var reqUrl = BASE_URL + "send/preview";
+    var reqUrl = BASE_URL + "preview";
     this.setState({
       isLoading: true,
-      data: null,
+      content: html
     });
 
     var post_data = {
       url: this.state.url,
-    }
+    };
 
-    fetch(reqUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(post_data)
-    }).then((response) => response.json())
-      .then((responseText) => {
-        console.log(responseText);
+    axios.post(reqUrl, post_data)
+      .then((response) => {
         this.setState({
           isLoading: false,
-          response: responseText,
+          content: response.data.content,
         });
       })
-      .catch((error) => {
+      .catch(function (error) {
+        console.log(error);
         this.setState({
           isLoading: false,
           response: null,
         });
       });
-  }
 
-  onNavigationStateChange(navState) {
-    this.setState({
-      backButtonEnabled: navState.canGoBack,
-      forwardButtonEnabled: navState.canGoForward,
-      url: navState.url,
-      status: navState.title,
-      loading: navState.loading,
-      scalesPageToFit: true
-    });
+
   }
 
   onShouldStartLoadWithRequest(event) {
@@ -84,8 +64,6 @@ class PreviewView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header
-          title="Filter"/>
         {this._contentView()}
       </View>
     );
@@ -96,14 +74,13 @@ class PreviewView extends Component {
       <WebView
         automaticallyAdjustContentInsets={false}
         style={styles.webView}
-        source={this.state.response.content}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         decelerationRate="normal"
-        onNavigationStateChange={this.onNavigationStateChange}
         onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
         startInLoadingState={true}
         scalesPageToFit={this.state.scalesPageToFit}
+        source={{html: this.state.content, baseUrl: 'http://www.kindlezhushou.com'}}
       />
     );
   }

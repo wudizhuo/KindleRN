@@ -8,7 +8,6 @@ import {
   TouchableHighlight,
 } from 'react-native';
 var Dimensions = require('Dimensions');
-import Header from '@js/common/Header';
 import { Actions } from 'react-native-router-flux';
 
 class MainView extends React.Component {

@@ -11,7 +11,8 @@ export default class App extends Component {
         <Scene key="root">
           <Scene key="MainView" component={MainView} title="Kindle助手" titleStyle={{color:'white'}}
                  navigationBarStyle={{backgroundColor:primaryColor}} initial={true}/>
-          <Scene key="PreviewView" component={PreviewView} title="PreviewView"/>
+          <Scene key="PreviewView" component={PreviewView} title="PreviewView" titleStyle={{color:'white'}}
+                 navigationBarStyle={{backgroundColor:primaryColor}}/>
         </Scene>
       </Router>
     )
