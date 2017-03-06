@@ -26,6 +26,9 @@ class MainView extends React.Component {
   }
 
   _preview() {
+    if(!this.state.inputText|| 0 === this.state.inputText){
+      return;
+    }
     Actions.PreviewView({url: this.state.inputText});
   }
 
