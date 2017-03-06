@@ -3,12 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
   AsyncStorage,
   TextInput,
   TouchableHighlight,
 } from 'react-native';
 var Dimensions = require('Dimensions');
-import { Actions } from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 
 class MainView extends React.Component {
   constructor(props) {
@@ -26,13 +27,31 @@ class MainView extends React.Component {
   }
 
   _preview() {
-    if(!this.state.inputText|| 0 === this.state.inputText){
+    if (!this._checkAndAlert()) {
       return;
     }
     Actions.PreviewView({url: this.state.inputText});
   }
 
+  _checkAndAlert() {
+    if (!this.state.inputText || 0 === this.state.inputText) {
+      Alert.alert(
+        '',
+        '请输入推送的网址',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      );
+      return false;
+    }
+    return true;
+  }
+
   _send() {
+    if (!this._checkAndAlert()) {
+      return;
+    }
     AsyncStorage.getItem("from_email").then((value) => {
       this.setState({from_email: value});
       if (value == null) {
