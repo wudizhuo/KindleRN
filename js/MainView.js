@@ -87,9 +87,6 @@ class MainView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header
-          title="Kindle助手"
-        />
         <TextInput
           style={styles.textInput}
           textAlignVertical="top"
