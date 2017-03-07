@@ -7,7 +7,7 @@ import {primaryColor} from '@js/common/Colors';
 export default class App extends Component {
   render() {
     return (
-      <Router>
+      <Router getSceneStyle={getSceneStyle}>
         <Scene key="root">
           <Scene key="MainView" component={MainView} title="Kindle助手" titleStyle={{color:'white'}}
                  navigationBarStyle={{backgroundColor:primaryColor}} initial={true}/>
@@ -18,3 +18,18 @@ export default class App extends Component {
     )
   }
 }
+const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) => {
+  const style = {
+    flex: 1,
+    backgroundColor: '#fff',
+    shadowColor: null,
+    shadowOffset: null,
+    shadowOpacity: null,
+    shadowRadius: null,
+  };
+  if (computedProps.isActive) {
+    style.marginTop = computedProps.hideNavBar ? 0 : 64;
+    style.marginBottom = computedProps.hideTabBar ? 0 : 50;
+  }
+  return style;
+};

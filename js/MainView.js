@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 var Dimensions = require('Dimensions');
 import {Actions} from 'react-native-router-flux';
+import {BASE_URL} from './common/Constants';
 
 class MainView extends React.Component {
   constructor(props) {
