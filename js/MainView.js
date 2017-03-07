@@ -49,6 +49,10 @@ class MainView extends React.Component {
     return true;
   }
 
+  _goToSetting() {
+    Actions.Setting();
+  }
+
   _send() {
     if (!this._checkAndAlert()) {
       return;
@@ -56,14 +60,14 @@ class MainView extends React.Component {
     AsyncStorage.getItem("from_email").then((value) => {
       this.setState({from_email: value});
       if (value == null) {
-        this.goToSetting();
+        this._goToSetting();
         return;
       }
     }).done();
-    AsyncStorage.getItem("receive_email").then((value) => {
+    AsyncStorage.getItem("to_email").then((value) => {
       this.setState({receive_email: value});
       if (value == null) {
-        this.goToSetting();
+        this._goToSetting();
         return;
       }
     }).done();
@@ -114,7 +118,7 @@ class MainView extends React.Component {
           style={styles.textInput}
           textAlignVertical="top"
           multiline={true}
-          onChangeText={(inputText) => this.setState({inputText})}
+          onChangeText={(input) => this.setState({inputText:input})}
           value={this.state.inputText}
         />
         <View style={{
@@ -148,6 +152,7 @@ class MainView extends React.Component {
         }}>
           <TouchableHighlight
             style={styles.touchable}
+            underlayColor="#1976D2"
             onPress={this._send.bind(this)}>
             <Text style={styles.button}>
               发送到我的kindle
