@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://kindlezhushou.com/v3/';
+export const BASE_URL = 'http://api.kindlezhushou.com/v3/';

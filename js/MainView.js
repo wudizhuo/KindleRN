@@ -8,15 +8,18 @@ import {
   TextInput,
   TouchableHighlight,
 } from 'react-native';
+import axios from 'axios';
+
 var Dimensions = require('Dimensions');
 import {Actions} from 'react-native-router-flux';
-import {BASE_URL} from './common/Constants';
+import {BASE_URL, ERROR_CODE_FROM_EMAIL, ERROR_CODE_TO_EMAIL, ERROR_CODE_INVALID_URL} from './common/Constants';
 
 class MainView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inputText: '',
+      isLoading: false,
     };
   }
 
@@ -82,18 +85,18 @@ class MainView extends React.Component {
       to_email: this.state.receive_email
     }
 
-    var reqUrl = BASE_URL + "send/url";
+    var reqUrl = BASE_URL + "send";
 
     axios.post(reqUrl, post_data)
-      .then(function (response) {
-        console.log(response);
+      .then((response) => {
+        console.log("test----");
         this.setState({
           isLoading: false,
         });
 
         Alert.alert(
           '',
-          response.status == 0 ? "发送成功" : response.msg,
+          response.status == 0 ? "发送成功" : response.error,
           [
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
@@ -101,11 +104,21 @@ class MainView extends React.Component {
         );
 
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((res) => {
+        // console.log(res);
+        console.log("sunzhuo---" + res.response.data.error,);
         this.setState({
           isLoading: false,
         });
+
+        Alert.alert(
+          '',
+          '' + res.response.data.error,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          {cancelable: true}
+        );
       });
   }
 

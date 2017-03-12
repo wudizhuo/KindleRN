@@ -8,7 +8,7 @@ import {
   WebView,
 } from 'react-native';
 
-var BASE_URL = 'http://api.kindlezhushou.com/v3/';
+import {BASE_URL} from './common/Constants';
 
 var html = '<!DOCTYPE html><html><head></head><body>加载中。。。</body></html>';
 
@@ -49,7 +49,7 @@ class PreviewView extends Component {
         console.log(error);
         this.setState({
           isLoading: false,
-          response: null,
+          content: null,
         });
       });
 
