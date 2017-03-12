@@ -89,7 +89,6 @@ class MainView extends React.Component {
 
     axios.post(reqUrl, post_data)
       .then((response) => {
-        console.log("test----");
         this.setState({
           isLoading: false,
         });
@@ -105,8 +104,7 @@ class MainView extends React.Component {
 
       })
       .catch((res) => {
-        // console.log(res);
-        console.log("sunzhuo---" + res.response.data.error,);
+        console.log(res);
         this.setState({
           isLoading: false,
         });
