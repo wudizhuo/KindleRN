@@ -84,31 +84,29 @@ class MainView extends React.Component {
 
     var reqUrl = BASE_URL + "send/url";
 
-    fetch(reqUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(post_data)
-    }).then((response) => response.json())
-      .then((responseText) => {
-        console.log(responseText);
-        if (responseText.status != 0) {
-          ToastAndroid.show(responseText.msg, ToastAndroid.SHORT);
-        } else {
-          ToastAndroid.show("发送成功", ToastAndroid.SHORT);
-        }
+    axios.post(reqUrl, post_data)
+      .then(function (response) {
+        console.log(response);
         this.setState({
           isLoading: false,
         });
+
+        Alert.alert(
+          '',
+          response.status == 0 ? "发送成功" : response.msg,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          {cancelable: true}
+        );
+
       })
-      .catch((error) => {
+      .catch(function (error) {
+        console.log(error);
         this.setState({
           isLoading: false,
         });
       });
-
   }
 
   render() {
