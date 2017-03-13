@@ -112,7 +112,7 @@ class MainView extends React.Component {
         });
 
         Alert.alert(
-          '',
+          '发送失败',
           '' + res.response.data.error,
           [
             {text: 'OK', onPress: () => console.log('OK Pressed')},

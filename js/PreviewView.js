@@ -4,11 +4,13 @@ import axios from 'axios';
 import {
   View,
   Text,
+  Alert,
   StyleSheet,
   WebView,
 } from 'react-native';
 
 import {BASE_URL} from './common/Constants';
+import {Actions} from 'react-native-router-flux';
 
 var html = '<!DOCTYPE html><html><head></head><body>加载中。。。</body></html>';
 
@@ -45,15 +47,22 @@ class PreviewView extends Component {
           content: response.data.content,
         });
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
         this.setState({
           isLoading: false,
-          content: null,
+          content: error.response.data.error,
         });
+
+        Alert.alert(
+          '预览失败',
+          '' + error.response.data.error,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          {cancelable: true}
+        );
+        Actions.pop();
       });
-
-
   }
 
   onShouldStartLoadWithRequest(event) {
