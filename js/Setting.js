@@ -8,23 +8,28 @@ import {
   TextInput,
   TouchableHighlight,
 } from 'react-native';
+import {Actions} from 'react-native-router-flux';
 
 class Setting extends Component {
 
   constructor(props) {
     super(props);
-    try {
-      const value = AsyncStorage.getItem('@MySuperStore:key');
-      if (value !== null) {
-        console.log(value);
+    this.state = {
+      from_email: '',
+      to_email: ''
+    };
+
+    AsyncStorage.getItem("from_email").then((value) => {
+      if (value != null) {
+        this.setState({from_email: value});
       }
-      this.state = {
-        from_email: AsyncStorage.getItem('from_email'),
-        to_email: AsyncStorage.getItem('to_email'),
-      };
-    } catch (error) {
-      console.log(error);
-    }
+    }).done();
+    AsyncStorage.getItem("to_email").then((value) => {
+      if (value != null) {
+        this.setState({to_email: value});
+      }
+    }).done();
+
   }
 
   _save() {
@@ -34,17 +39,20 @@ class Setting extends Component {
     } catch (error) {
       console.log(error);
     }
+    Actions.pop();
   }
 
   render() {
     return (
       <View style={styles.container}>
         <TextInput
+          placeholder="请填入Kindle认可的邮箱"
           style={styles.textInput}
           value={this.state.from_email}
           onChangeText={(input) => this.setState({from_email:input})}
         />
         <TextInput
+          placeholder="Kindle账户邮箱"
           style={styles.textInput}
           value={this.state.to_email}
           onChangeText={(input) => this.setState({to_email:input})}
@@ -52,7 +60,7 @@ class Setting extends Component {
         <TouchableHighlight
           style={styles.touchable}
           underlayColor={darkAccentColor}
-          onPress={this._save()}>
+          onPress={()=>this._save()}>
           <Text style={styles.button}>
             保存
           </Text>
@@ -73,10 +81,12 @@ var styles = StyleSheet.create({
     paddingLeft: 4,
     fontSize: 20,
     height: 60,
+    marginTop: 10,
     borderColor: 'gray',
     borderWidth: 1,
   },
   touchable: {
+    marginTop: 10,
     backgroundColor: accentColor,
     height: 50,
     alignItems: 'center',

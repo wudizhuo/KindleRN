@@ -61,6 +61,7 @@ class MainView extends React.Component {
       return;
     }
     AsyncStorage.getItem("from_email").then((value) => {
+      console.log('from_email---'+value);
       this.setState({from_email: value});
       if (value == null) {
         this._goToSetting();
@@ -68,7 +69,8 @@ class MainView extends React.Component {
       }
     }).done();
     AsyncStorage.getItem("to_email").then((value) => {
-      this.setState({receive_email: value});
+      console.log('to_email---'+value);
+      this.setState({to_email: value});
       if (value == null) {
         this._goToSetting();
         return;
@@ -82,7 +84,7 @@ class MainView extends React.Component {
     var post_data = {
       url: this.state.inputText,
       from_email: this.state.from_email,
-      to_email: this.state.receive_email
+      to_email: this.state.to_email
     }
 
     var reqUrl = BASE_URL + "send";
