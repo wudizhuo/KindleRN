@@ -101,7 +101,7 @@ class MainView extends React.Component {
 
         Alert.alert(
           '',
-          response.status == 0 ? "发送成功" : response.error,
+          "发送成功",
           [
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
