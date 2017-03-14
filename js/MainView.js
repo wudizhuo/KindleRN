@@ -41,7 +41,7 @@ class MainView extends React.Component {
     if (!this.state.inputText || 0 === this.state.inputText) {
       Alert.alert(
         '',
-        '请输入推送的网址',
+        '请输入要推送的网址',
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
@@ -145,6 +145,7 @@ class MainView extends React.Component {
             textAlignVertical="top"
             multiline={true}
             autoCorrect={false}
+            placeholder="请输入要推送的网址"
             autoCapitalize="none"
             onChangeText={(input) => this.setState({inputText: input})}
             value={this.state.inputText}
