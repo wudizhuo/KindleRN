@@ -56,26 +56,30 @@ class MainView extends React.Component {
     Actions.Setting();
   }
 
-  _send() {
+  async _send() {
     if (!this._checkAndAlert()) {
       return;
     }
-    AsyncStorage.getItem("from_email").then((value) => {
-      console.log('from_email---'+value);
-      this.setState({from_email: value});
-      if (value == null) {
+
+    try {
+      var from_email = await AsyncStorage.getItem("from_email");
+      console.log('from_email---'+from_email);
+      this.setState({from_email: from_email});
+      if (from_email == null) {
         this._goToSetting();
         return;
       }
-    }).done();
-    AsyncStorage.getItem("to_email").then((value) => {
-      console.log('to_email---'+value);
-      this.setState({to_email: value});
-      if (value == null) {
+
+      var to_email = await AsyncStorage.getItem("to_email")
+      console.log('to_email---'+to_email);
+      this.setState({to_email: to_email});
+      if (to_email == null) {
         this._goToSetting();
         return;
       }
-    }).done();
+    } catch (error) {
+      console.log('error---' + error);
+    }
 
     this.setState({
       isLoading: true,
@@ -123,58 +127,72 @@ class MainView extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          textAlignVertical="top"
-          multiline={true}
-          onChangeText={(input) => this.setState({inputText:input})}
-          value={this.state.inputText}
-        />
-        <View style={{
-                        width:Dimensions.get('window').width,
-                        flexDirection:'row',
-                        height: 50,
-                        }
-                    }>
-          <TouchableHighlight
-            style={styles.touchable}
-            underlayColor="#1976D2"
-            onPress={this._clean.bind(this)}>
-            <Text style={styles.button}>
-              清除内容
-            </Text>
-          </TouchableHighlight>
+    if (this.state.isLoading) {
+      return (
+        <View style={[styles.container, styles.center]}>
+          <Text
+            style={{
+              marginTop: 20
+            }}
+          >发送中....</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <TextInput
+            style={styles.textInput}
+            textAlignVertical="top"
+            multiline={true}
+            autoCorrect={false}
+            autoCapitalize="none"
+            onChangeText={(input) => this.setState({inputText: input})}
+            value={this.state.inputText}
+          />
+          <View style={{
+            width: Dimensions.get('window').width,
+            flexDirection: 'row',
+            height: 50,
+          }
+          }>
+            <TouchableHighlight
+              style={styles.touchable}
+              underlayColor="#1976D2"
+              onPress={this._clean.bind(this)}>
+              <Text style={styles.button}>
+                清除内容
+              </Text>
+            </TouchableHighlight>
 
-          <TouchableHighlight
-            style={styles.touchable}
-            underlayColor="#1976D2"
-            onPress={this._preview.bind(this)}>
-            <Text style={styles.button}>
-              预览内容
-            </Text>
-          </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.touchable}
+              underlayColor="#1976D2"
+              onPress={this._preview.bind(this)}>
+              <Text style={styles.button}>
+                预览内容
+              </Text>
+            </TouchableHighlight>
+          </View>
+          <View style={{
+            height: 55,
+            width: Dimensions.get('window').width,
+            marginTop: 8,
+          }}>
+            <TouchableHighlight
+              style={styles.touchable}
+              underlayColor="#1976D2"
+              onPress={this._send.bind(this)}>
+              <Text style={styles.button}>
+                发送到我的kindle
+              </Text>
+            </TouchableHighlight>
+          </View>
+          <View style={{
+            flex: 1,
+          }}></View>
         </View>
-        <View style={{
-          height: 55,
-          width:Dimensions.get('window').width,
-          marginTop:8,
-        }}>
-          <TouchableHighlight
-            style={styles.touchable}
-            underlayColor="#1976D2"
-            onPress={this._send.bind(this)}>
-            <Text style={styles.button}>
-              发送到我的kindle
-            </Text>
-          </TouchableHighlight>
-        </View>
-        <View style={{
-          flex:1,
-        }}></View>
-      </View>
-    );
+      );
+    }
   }
 }
 

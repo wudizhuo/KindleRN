@@ -47,11 +47,15 @@ class Setting extends Component {
       <View style={styles.container}>
         <TextInput
           placeholder="请填入Kindle认可的邮箱"
+          autoCorrect={false}
+          autoCapitalize="none"
           style={styles.textInput}
           value={this.state.from_email}
           onChangeText={(input) => this.setState({from_email:input})}
         />
         <TextInput
+          autoCorrect={false}
+          autoCapitalize="none"
           placeholder="Kindle账户邮箱"
           style={styles.textInput}
           value={this.state.to_email}
