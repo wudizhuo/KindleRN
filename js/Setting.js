@@ -51,7 +51,7 @@ class Setting extends Component {
           autoCapitalize="none"
           style={styles.textInput}
           value={this.state.from_email}
-          onChangeText={(input) => this.setState({from_email:input})}
+          onChangeText={(input) => this.setState({from_email: input})}
         />
         <TextInput
           autoCorrect={false}
@@ -59,16 +59,19 @@ class Setting extends Component {
           placeholder="Kindle账户邮箱"
           style={styles.textInput}
           value={this.state.to_email}
-          onChangeText={(input) => this.setState({to_email:input})}
+          onChangeText={(input) => this.setState({to_email: input})}
         />
         <TouchableHighlight
           style={styles.touchable}
           underlayColor={darkAccentColor}
-          onPress={()=>this._save()}>
+          onPress={() => this._save()}>
           <Text style={styles.button}>
             保存
           </Text>
         </TouchableHighlight>
+        <Text style={styles.feedback}>
+          微博：无敌卓，欢迎沟通反馈，谢谢支持
+        </Text>
       </View>
     );
   }
@@ -96,6 +99,13 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  feedback: {
+    margin: 8,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0
+  }
 });
 
 module.exports = Setting;
