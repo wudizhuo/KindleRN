@@ -50,12 +50,12 @@ class PreviewView extends Component {
       .catch((error) => {
         this.setState({
           isLoading: false,
-          content: error.response.data.error,
+          content: error.response.data.message,
         });
 
         Alert.alert(
           '预览失败',
-          '' + error.response.data.error,
+          '' + error.response.data.message,
           [
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
